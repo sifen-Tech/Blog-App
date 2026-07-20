@@ -33,34 +33,32 @@ function BlogForm() {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Give your thoughts a name..."
-        value={blog.title}
-        onChange={(e) =>
-          setBlog({
-            ...blog,
-            title: e.target.value,
-          })
-        }
-      />
-
-      <br />
-
-      <input
-        type="text"
-        placeholder="Start writing here..."
-        value={blog.content}
-        onChange={(e) =>
-          setBlog({
-            ...blog,
-            content: e.target.value,
-          })
-        }
-      />
-
-      <br />
-
+      <div className="w-[1000px] h-[400px] border border-gray-300 rounded-xl p-10 bg-white shadow-sm hover:shadow-md transition">
+        <input
+          type="text"
+          placeholder="Give your thoughts a name..."
+          value={blog.title}
+          onChange={(e) =>
+            setBlog({
+              ...blog,
+              title: e.target.value,
+            })
+          }
+        />
+      </div>
+      <div className="w-[1000px] h-[400px] border border-gray-300 rounded-xl p-10 bg-white shadow-sm hover:shadow-md transition">
+        <input
+          type="text"
+          placeholder="Start writing here.Use the whitespace to find your flow..... "
+          value={blog.content}
+          onChange={(e) =>
+            setBlog({
+              ...blog,
+              content: e.target.value,
+            })
+          }
+        />
+      </div>
       <button onClick={handleSubmit}>Submit</button>
     </div>
   );
