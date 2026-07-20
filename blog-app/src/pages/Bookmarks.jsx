@@ -1,19 +1,17 @@
 import { useAtom } from "jotai";
 import { bookmarksAtom } from "../atoms/bookmarkAtoms";
+import BlogCard from "../components/BlogCard";
 
 function Bookmarks() {
   const [bookmarks] = useAtom(bookmarksAtom);
 
   return (
     <div>
-      <h1>Saved Blogs</h1>
-
-      {bookmarks.map((post) => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.body}</p>
-        </div>
-      ))}
+      {bookmarks.length === 0 ? (
+        <p>No bookmarks yet.</p>
+      ) : (
+        bookmarks.map((post) => <BlogCard key={post.id} post={post} />)
+      )}
     </div>
   );
 }

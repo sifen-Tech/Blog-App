@@ -8,9 +8,12 @@ function BlogForm() {
     title: "",
     content: "",
   });
-
-  const handleSubmit = () => {
-    const existingBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!blog.title.trim() || !blog.content.trim()) {
+      alert("Please fill in both the title and content.");
+      return;
+    }
 
     const newBlog = {
       id: Date.now(),
@@ -19,6 +22,7 @@ function BlogForm() {
       tags: [],
     };
 
+    const existingBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
     const updatedBlogs = [...existingBlogs, newBlog];
 
     localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
@@ -32,35 +36,31 @@ function BlogForm() {
   };
 
   return (
-    <div>
-      <div className="w-[1000px] h-[400px] border border-gray-300 rounded-xl p-10 bg-white shadow-sm hover:shadow-md transition">
-        <input
-          type="text"
-          placeholder="Give your thoughts a name..."
-          value={blog.title}
-          onChange={(e) =>
-            setBlog({
-              ...blog,
-              title: e.target.value,
-            })
-          }
-        />
-      </div>
-      <div className="w-[1000px] h-[400px] border border-gray-300 rounded-xl p-10 bg-white shadow-sm hover:shadow-md transition">
-        <input
-          type="text"
-          placeholder="Start writing here.Use the whitespace to find your flow..... "
-          value={blog.content}
-          onChange={(e) =>
-            setBlog({
-              ...blog,
-              content: e.target.value,
-            })
-          }
-        />
-      </div>
-      <button onClick={handleSubmit}>Submit</button>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <textarea
+        placeholder="Give your thoughts a name..."
+        value={blog.title}
+        onChange={(e) =>
+          setBlog({
+            ...blog,
+            title: e.target.value,
+          })
+        }
+      />
+
+      <textarea
+        placeholder="Start writing here.Use the whitespace to find your flow..... "
+        value={blog.content}
+        onChange={(e) =>
+          setBlog({
+            ...blog,
+            content: e.target.value,
+          })
+        }
+      />
+
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 

@@ -13,7 +13,10 @@ function Home() {
         return res.json();
       })
       .then((data) => {
-        setPosts(data.posts);
+        const localBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
+
+        const allPosts = [...localBlogs, ...data.posts];
+        setPosts(allPosts);
         setLoading(false);
       })
       .catch((err) => {
