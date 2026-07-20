@@ -8,12 +8,18 @@ function BlogForm() {
     title: "",
     content: "",
   });
+
+  const [formError, setFormError] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!blog.title.trim() || !blog.content.trim()) {
-      alert("Please fill in both the title and content.");
+      setFormError("Please fill in both the title and content.");
       return;
     }
+
+    setFormError("");
 
     const newBlog = {
       id: Date.now(),
@@ -23,6 +29,7 @@ function BlogForm() {
     };
 
     const existingBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
+
     const updatedBlogs = [...existingBlogs, newBlog];
 
     localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
@@ -36,30 +43,45 @@ function BlogForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <textarea
+    <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-6">
+      {formError && (
+        <p className="mb-4 text-red-600 font-medium">{formError}</p>
+      )}
+
+      <input
+        type="text"
         placeholder="Give your thoughts a name..."
         value={blog.title}
-        onChange={(e) =>
+        onChange={(e) => {
           setBlog({
             ...blog,
             title: e.target.value,
-          })
-        }
+          });
+          setFormError("");
+        }}
+        className="w-full border rounded-md p-3 mb-4"
       />
 
       <textarea
-        placeholder="Start writing here.Use the whitespace to find your flow..... "
+        placeholder="Start writing here. Use the whitespace to find your flow..."
         value={blog.content}
-        onChange={(e) =>
+        onChange={(e) => {
           setBlog({
             ...blog,
             content: e.target.value,
-          })
-        }
+          });
+          setFormError("");
+        }}
+        rows={10}
+        className="w-full border rounded-md p-3 mb-4"
       />
 
-      <button type="submit">Submit</button>
+      <button
+        type="submit"
+        className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
+      >
+        Submit
+      </button>
     </form>
   );
 }

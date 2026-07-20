@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { bookmarksAtom } from "../atoms/bookmarkAtoms";
 import { Bookmark } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function BlogDetail() {
   const { id } = useParams();
@@ -10,6 +11,7 @@ function BlogDetail() {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const [bookmarks, setBookmarks] = useAtom(bookmarksAtom);
   const isBookmarked = bookmarks.some((item) => item.id === post?.id);
   const toggleBookmark = () => {
@@ -21,30 +23,28 @@ function BlogDetail() {
   };
 
   useEffect(() => {
-    useEffect(() => {
-      const localBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
+    const localBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
 
-      const localPost = localBlogs.find((blog) => blog.id === Number(id));
+    const localPost = localBlogs.find((blog) => blog.id === Number(id));
 
-      if (localPost) {
-        setPost(localPost);
-        setLoading(false);
-      } else {
-        fetch(`https://dummyjson.com/posts/${id}`)
-          .then((res) => {
-            if (!res.ok) throw new Error("Failed to fetch");
-            return res.json();
-          })
-          .then((data) => {
-            setPost(data);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setError(err.message);
-            setLoading(false);
-          });
-      }
-    }, [id]);
+    if (localPost) {
+      setPost(localPost);
+      setLoading(false);
+    } else {
+      fetch(`https://dummyjson.com/posts/${id}`)
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch");
+          return res.json();
+        })
+        .then((data) => {
+          setPost(data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(err.message);
+          setLoading(false);
+        });
+    }
 
     fetch(`https://dummyjson.com/posts/${id}/comments`)
       .then((res) => {
@@ -55,7 +55,6 @@ function BlogDetail() {
         setComments(data.comments);
       });
   }, [id]);
-
   if (loading) {
     return <p>Loading post...</p>;
   }
@@ -64,11 +63,16 @@ function BlogDetail() {
     return <p>Error: {error}</p>;
   }
 
+  if (!post) {
+    return <p>Post not found.</p>;
+  }
+
   return (
     <>
+      <button onClick={() => navigate("/")}>← Back to Home</button>
       <div>
         <div>
-          {post.tags?.map((tag) => (
+          {post?.tags?.map((tag) => (
             <span key={tag} className="mr-5">
               #{tag}
             </span>
