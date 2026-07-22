@@ -43,7 +43,7 @@ function BlogForm() {
 
   return (
     <div
-      className="min-h-screen pt-24 bg-cover bg-center bg-no-repeat"
+      className="min-h-screen pt-10 bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${mountainBg})` }}
     >
       <div className="min-h-screen bg-black/50 p-10">
