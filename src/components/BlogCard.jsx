@@ -32,7 +32,12 @@ function BlogCard({ posts = [] }) {
               {post.title}
             </h2>
             <p className="mt-3 text-gray-700 line-clamp-3">{post.body}</p>
-            <Link to={`/post/${post.id}`}>Read More →</Link>
+            <Link
+              to={`/post/${post.id}`}
+              className="text-amber-800 hover:text-amber-600 font-medium"
+            >
+              Read More →
+            </Link>
           </div>
         ))}
       </div>

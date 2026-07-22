@@ -10,21 +10,19 @@ This project demonstrates modern React development concepts, including component
 
 ### Home Page
 
-![Home Page](./screenshots/home.png)
+![alt text](src/images/Home.png)
 
 ### Blog Details
 
-![Blog Details](./screenshots/details.png)
+![alt text](src/images/BlogDetail.png)
 
 ### Create Post
 
-![Create Post](./screenshots/create-post.png)
+![alt text](src/images/CreatePost.png)
 
 ### Bookmarks
 
-![Bookmarks](./screenshots/bookmarks.png)
-
----
+## ![alt text](src/images/Bookmarks.png)
 
 ## Features
 
@@ -98,6 +96,10 @@ src
 │
 ├── images
 │   └── mountain.png
+|   |___Home.png
+|   |___BlogDetail.png
+|   |__CreatePost.png
+|   |__Bookmarks.png
 │
 ├── pages
 │   ├── Home.jsx
